@@ -11,14 +11,15 @@ public class Server {
     public static void main(String[] args) throws IOException {
         final String votersPath = "./files/voters.csv";
         final String votesPath = "./files/votes.csv";
-
+        BufferedReader votesReader = null;
+        BufferedWriter votesWriter = null;
         BufferedReader votersReader = new BufferedReader(new FileReader(votersPath));
         BufferedWriter votersWriter = new BufferedWriter(new FileWriter(votersPath));
 
         List<Senador> senadores = new ArrayList<>();
 
         try{
-            BufferedReader votesReader = new BufferedReader(new FileReader(votesPath));
+            votesReader = new BufferedReader(new FileReader(votesPath));
 
             // Candidate list Title
             System.out.println("NR_CANDIDATO;NM_URNA_CANDIDATO;SG_PARTIDO");
@@ -40,7 +41,7 @@ public class Server {
             votesReader.close();
 
             // Rewrite updated votes
-            BufferedWriter votesWriter = new BufferedWriter(new FileWriter(votesPath));
+            votesWriter = new BufferedWriter(new FileWriter(votesPath));
             while (!senadores.isEmpty()){
                 votesWriter.write(senadores.remove(0).toStringWithVotes() + System.lineSeparator());
             }
