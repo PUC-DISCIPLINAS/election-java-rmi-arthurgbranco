@@ -1,5 +1,6 @@
 package app;
 
+import object.Election;
 import object.Senador;
 
 import java.io.*;
@@ -8,24 +9,49 @@ import java.util.List;
 
 public class Server {
 
+    private static final List<Senador> senadores = new ArrayList<>();
+    private static final List<String> voters = new ArrayList<>();
+    private static final String votersPath = "./files/voters.csv";
+    private static final String votesPath = "./files/votes.csv";
+
+    static void vote(String eleitor, String candidato) throws IOException {
+
+        if(voters.contains(eleitor)){
+            System.out.println("This eleitor already voted!");
+        }else{
+            voters.add(eleitor);
+            BufferedWriter votersWriter = new BufferedWriter(new FileWriter(votersPath));
+            while(!voters.isEmpty()){
+                votersWriter.write(voters.remove(0) + System.lineSeparator());
+            }
+            votersWriter.close();
+
+            // Increment vote
+            findCandidato(candidato).addVote();
+        }
+    }
+
+    static String result(String candidato){
+        return Integer.toString(findCandidato(candidato).getVotes());
+    }
+
+    static Senador findCandidato(String candidato){
+        return senadores.stream().filter(e -> e.getName().equals(candidato)).findFirst().get();
+    }
+
     public static void main(String[] args) throws IOException {
-        final String votersPath = "./files/voters.csv";
-        final String votesPath = "./files/votes.csv";
         BufferedReader votesReader = null;
         BufferedWriter votesWriter = null;
-        BufferedReader votersReader = new BufferedReader(new FileReader(votersPath));
-        BufferedWriter votersWriter = new BufferedWriter(new FileWriter(votersPath));
-
-        List<Senador> senadores = new ArrayList<>();
+        BufferedReader votersReader = null;
+        String row = null;
 
         try{
-            votesReader = new BufferedReader(new FileReader(votesPath));
 
             // Candidate list Title
             System.out.println("NR_CANDIDATO;NM_URNA_CANDIDATO;SG_PARTIDO");
 
+            votesReader = new BufferedReader(new FileReader(votesPath));
             // Print all the candidates and add to ArrayList
-            String row;
             while ((row = votesReader.readLine()) != null) {
                 String[] data = row.split(";");
                 String id = data[0];
@@ -40,6 +66,22 @@ public class Server {
             }
             votesReader.close();
 
+
+            // Add computed votes to ArrayList
+            votersReader = new BufferedReader(new FileReader(votersPath));
+            while ((row = votersReader.readLine()) != null) {
+                voters.add(row);
+            }
+            votersReader.close();
+
+            //TODO: test values, delete later
+            String eleitor = "4c1a1fb85fbc0bfc581a338a5c0e210a";
+            String candidato = "LUIZ FERNANDO SANTOS";
+            vote(eleitor, candidato);
+            System.out.println("Results for " + candidato + ":");
+            System.out.println(result(candidato) + " votes");
+
+
             // Rewrite updated votes
             votesWriter = new BufferedWriter(new FileWriter(votesPath));
             while (!senadores.isEmpty()){
@@ -50,8 +92,7 @@ public class Server {
         }catch(Exception e){
             e.printStackTrace();
         }finally {
-            votersReader.close();
-            votersWriter.close();
+            System.out.println(System.lineSeparator() + "Closing the server...");
         }
     }
 }

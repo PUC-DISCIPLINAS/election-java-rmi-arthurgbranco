@@ -1,0 +1,4 @@
+Server:
+    - "add rmi remote methods"
+Client:
+    - "add rmi remote method calls"

@@ -1,5 +1,6 @@
 package object;
 
+import java.io.IOException;
 import java.rmi.Remote;
 
 public interface Election extends Remote {
