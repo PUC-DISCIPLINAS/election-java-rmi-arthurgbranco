@@ -2,7 +2,6 @@ import java.io.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class ElectionServant extends java.rmi.server.UnicastRemoteObject implements Election {
 
@@ -22,25 +21,24 @@ public class ElectionServant extends java.rmi.server.UnicastRemoteObject impleme
     public void vote(String eleitor, String candidato) throws java.rmi.RemoteException {
         try {
 
+            // Read files and gather data
+            readVoters();
+            readVotes();
+
             if (voters.contains(eleitor)) {
                 System.out.println("This eleitor already voted!");
             } else {
-
-                // Read files and gather data
-                readVoters();
-                readVotes();
-
-                voters.add(eleitor);
-
-                // Update computed voters
-                writeVoters();
-
                 // Increment vote
-                findCandidato(candidato).addVote(); // FIXME: Handle candidato not found
-
-                // Update computed votes
-                writeVotes();
+                voters.add(eleitor);
+                findCandidato(candidato).addVote(); // TODO: Handle candidato not found
             }
+
+            // Update computed voters
+            writeVoters();
+
+            // Update computed votes
+            writeVotes();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,11 +46,11 @@ public class ElectionServant extends java.rmi.server.UnicastRemoteObject impleme
 
     @Override
     public String result(String candidato) throws java.rmi.RemoteException {
-        return Integer.toString(findCandidato(candidato).getVotes()); // FIXME: Handle candidato not found
+        return Integer.toString(findCandidato(candidato).getVotes()); // TODO: Handle candidato not found
     }
 
     // FIXME: Handle candidato not found
-    private Senador findCandidato(String candidato) throws NoSuchElementException {
+    private Senador findCandidato(String candidato) {
         return senadores.stream().filter(e -> e.getId() == Integer.parseInt(candidato)).findFirst().get();
     }
 
@@ -62,7 +60,6 @@ public class ElectionServant extends java.rmi.server.UnicastRemoteObject impleme
         BufferedReader votesReader = null;
 
         try {
-
             votesReader = new BufferedReader(new FileReader(votesPath));
             String row = null;
 
@@ -109,8 +106,8 @@ public class ElectionServant extends java.rmi.server.UnicastRemoteObject impleme
         try{
             // Update computed votes on file
             votesWriter = new BufferedWriter(new FileWriter(votesPath));
-            while (!senadores.isEmpty()){
-                votesWriter.write(senadores.remove(0).toStringWithVotes() + System.lineSeparator());
+            for(Senador senador : senadores) {
+                votesWriter.write(senador.toStringWithVotes() + System.lineSeparator());
             }
             votesWriter.close();
 
@@ -126,8 +123,8 @@ public class ElectionServant extends java.rmi.server.UnicastRemoteObject impleme
         try{
             // Update computed voters on file
             votersWriter = new BufferedWriter(new FileWriter(votersPath));
-            while (!voters.isEmpty()) {
-                votersWriter.write(voters.remove(0) + System.lineSeparator());
+            for(String voter : voters){
+                votersWriter.write(voter + System.lineSeparator());
             }
             votersWriter.close();
 
