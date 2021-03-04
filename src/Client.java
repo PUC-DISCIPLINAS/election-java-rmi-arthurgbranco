@@ -45,7 +45,7 @@ public class Client {
             // TODO: Add 30 seconds timeout
             // Call remote methods
             System.out.println("Trying to compute vote...");
-            e.vote(eleitor, candidato);
+            e.vote(hashMd5, candidato);
             System.out.println("Vote computed!");
             System.out.println("Fetching results...");
             System.out.println("Current votes for " + candidato + ": " + e.result(candidato));
