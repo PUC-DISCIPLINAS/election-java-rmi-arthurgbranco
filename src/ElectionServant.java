@@ -13,13 +13,14 @@ public class ElectionServant extends java.rmi.server.UnicastRemoteObject impleme
     private final String votesPath = "../files/votes.csv";
 
     protected ElectionServant() throws RemoteException {
-        this.senadores = new ArrayList<>();
-        this.voters = new ArrayList<>();
     }
 
     @Override
     public void vote(String eleitor, String candidato) throws java.rmi.RemoteException {
         try {
+
+            this.senadores = new ArrayList<>();
+            this.voters = new ArrayList<>();
 
             // Read files and gather data
             readVoters();

@@ -15,7 +15,7 @@ public class Client {
         try {
             // Method lookup
             Election e = (Election) Naming.lookup(host + service);
-            System.out.println("Remove object \'"+ service + "\' found.");
+            System.out.println("Remote object \'"+ service + "\' found!" + System.lineSeparator());
 
             // Reading args
             String eleitor = "Arthur Gramiscelli Branco";
@@ -26,8 +26,6 @@ public class Client {
                 candidato = args[1];
             } else {
                 System.out.println("Args missing, using default values...");
-                System.out.println("Default eleitor: " + eleitor);
-                System.out.println("Default candidato: " + candidato);
             }
 
             // Generates a md5 hash based on eleitor's name
@@ -38,15 +36,15 @@ public class Client {
             // Format in lowercase Hexadecimal before printing to output
             BigInteger numMd5 = new BigInteger(1, md5);
             String hashMd5 = String.format("%022x", numMd5);
-
+            System.out.println("Dados do eleitor:");
             System.out.println("Nome: " + eleitor + System.lineSeparator()
-                    + "MD5: " + hashMd5 + System.lineSeparator() + "Candidato: " + candidato);
+                    + "MD5: " + hashMd5 + System.lineSeparator() + "Candidato: " + candidato + System.lineSeparator());
 
             // TODO: Add 30 seconds timeout
             // Call remote methods
-            System.out.println("Trying to compute vote...");
+            System.out.println("Sending vote...");
             e.vote(hashMd5, candidato);
-            System.out.println("Vote computed!");
+            System.out.println("Vote sent!");
             System.out.println("Fetching results...");
             System.out.println("Current votes for " + candidato + ": " + e.result(candidato));
         } catch (MalformedURLException e) {
