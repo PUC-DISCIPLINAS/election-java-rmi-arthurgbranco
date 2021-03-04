@@ -7,6 +7,16 @@ import java.security.MessageDigest;
 
 public class Client {
 
+    // TODO: Add 30 seconds timeout
+    // Call remote methods
+    private static void vote(Election e, String hashMd5, String candidato) throws RemoteException {
+        System.out.println("Sending vote...");
+        e.vote(hashMd5, candidato);
+        System.out.println("Vote sent!");
+        System.out.println("Fetching results...");
+        System.out.println("Current votes for " + candidato + ": " + e.result(candidato));
+    }
+
     public static void main(String[] args) {
 
         String host = "rmi://localhost/";
@@ -40,13 +50,8 @@ public class Client {
             System.out.println("Nome: " + eleitor + System.lineSeparator()
                     + "MD5: " + hashMd5 + System.lineSeparator() + "Candidato: " + candidato + System.lineSeparator());
 
-            // TODO: Add 30 seconds timeout
-            // Call remote methods
-            System.out.println("Sending vote...");
-            e.vote(hashMd5, candidato);
-            System.out.println("Vote sent!");
-            System.out.println("Fetching results...");
-            System.out.println("Current votes for " + candidato + ": " + e.result(candidato));
+            vote(e, hashMd5, candidato);
+
         } catch (MalformedURLException e) {
             System.out.println("URL \'" + host + service + "\' malformed.");
         } catch (RemoteException e) {
