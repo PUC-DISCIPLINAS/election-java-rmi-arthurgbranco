@@ -19,7 +19,7 @@ public class Client {
 
             // Reading args
             String eleitor = "Arthur Gramiscelli Branco";
-            String candidato = "LUIZ FERNANDO SANTOS";
+            String candidato = "135";
 
             if (args.length > 1) {
                 eleitor = args[0];

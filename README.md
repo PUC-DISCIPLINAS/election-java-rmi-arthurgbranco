@@ -16,10 +16,11 @@ Como rodar:
   * `cd ./bin`
   * `rmiregistry`
 
-4. Abra outra janela do terminal dentro da raiz do projeto e rode o script do servidor
+4. Abra outra janela do terminal dentro da raiz do projeto e execute o script do servidor
   * `chmod +x ./server.sh`
   * `./server.sh`
 
-5. Execute o script do cliente passando os parametros (eleitor) (candidato), ex:
+5. Abra outra janela do terminal dentro da raiz do projeto e execute o script do cliente passando os parametros (eleitor) (candidato), ex:
   * `chmod +x ./client.sh`
-  * `./client.sh "Arthur Gramiscelli Branco" "LUIZ FERNANDO SANTOS"`
+  * `./client.sh "Arthur Gramiscelli Branco" "135"`
+	

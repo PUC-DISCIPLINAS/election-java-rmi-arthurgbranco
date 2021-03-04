@@ -12,4 +12,3 @@ done
 
 # Copy rmi policy and execute the Server
 cp ../rmi.policy ../bin
-

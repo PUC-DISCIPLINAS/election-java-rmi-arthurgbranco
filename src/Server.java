@@ -16,10 +16,6 @@ public class Server {
     public static void main(String[] args) {
 
         try{
-
-            // Candidate list Title
-            System.out.println("NR_CANDIDATO;NM_URNA_CANDIDATO;SG_PARTIDO");
-
             // Print senadores so Client can read and vote
             final String csvPath = "../files/senadores.csv";
             BufferedReader csvReader = new BufferedReader(new FileReader(csvPath));
@@ -30,12 +26,11 @@ public class Server {
             csvReader.close();
 
             // Start the server
+            System.out.println(System.lineSeparator() + "Election server running..." + System.lineSeparator());
             new Server();
-            System.out.println("Election server running...");
+
         }catch(Exception e){
             e.printStackTrace();
-        }finally {
-            System.out.println(System.lineSeparator() + "Closing the server...");
         }
     }
 }

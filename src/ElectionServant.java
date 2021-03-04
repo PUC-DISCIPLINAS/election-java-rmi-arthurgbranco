@@ -53,7 +53,7 @@ public class ElectionServant extends java.rmi.server.UnicastRemoteObject impleme
 
     // FIXME: Handle candidato not found
     private Senador findCandidato(String candidato) throws NoSuchElementException {
-        return senadores.stream().filter(e -> e.getName().equalsIgnoreCase(candidato)).findFirst().get();
+        return senadores.stream().filter(e -> e.getId() == Integer.parseInt(candidato)).findFirst().get();
     }
 
     // Populate votes Arraylist with Senadores and their vote count
@@ -136,5 +136,3 @@ public class ElectionServant extends java.rmi.server.UnicastRemoteObject impleme
         }
     }
 }
-
-
