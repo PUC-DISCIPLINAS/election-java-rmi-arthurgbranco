@@ -1,5 +1,3 @@
-package object;
-
 public class Senador {
     private int id;
     private String name;
@@ -14,45 +12,46 @@ public class Senador {
     }
 
     public void addVote() {
-        this.votes++;
+        ++this.votes;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int var1) {
+        this.id = var1;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String var1) {
+        this.name = var1;
+    }
 
     public String getParty() {
-        return party;
+        return this.party;
     }
 
-    public void setParty(String party) {
-        this.party = party;
+    public void setParty(String var1) {
+        this.party = var1;
     }
 
     public int getVotes() {
-        return votes;
+        return this.votes;
     }
 
-    public void setVotes(int votes) {
-        this.votes = votes;
+    public void setVotes(int var1) {
+        this.votes = var1;
     }
 
-    @Override
-    public String toString(){
+    public String toString() {
         return this.id + ";" + this.name + ";" + this.party;
     }
 
-    public String toStringWithVotes(){
+    public String toStringWithVotes() {
         return this.id + ";" + this.name + ";" + this.party + ";" + this.votes;
     }
 }

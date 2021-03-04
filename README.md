@@ -5,7 +5,10 @@ Trabalho de eleição utilizando java rmi
 Autor: Arthur Gramiscelli Branco
 
 Como rodar:
-(TODO)
+1. Rode o script do servidor
+  * `chmod +x ./server.sh`
+  * `./server.sh`
 
-### Comandos (TODO)
-
+2. Execute o script do cliente passando os parametros (eleitor) (candidato), ex:
+  * `chmod +x ./client.sh`
+  * `./client.sh "Arthur Gramiscelli Branco" "LUIZ FERNANDO SANTOS"`

@@ -1,4 +1,3 @@
 Server:
-    - "add rmi remote methods"
 Client:
-    - "add rmi remote method calls"
+    - "add 30 seconds timeout"
