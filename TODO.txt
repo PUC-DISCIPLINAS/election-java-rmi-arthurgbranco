@@ -1,7 +1,0 @@
-Server:
-Client:
-    - "add 30 seconds timeout"
-    - "refactor vote to use number instead of name"
-Servant:
-    - "Create votes.csv from senadores.csv if it does not exist"
-    - "Add mutex"

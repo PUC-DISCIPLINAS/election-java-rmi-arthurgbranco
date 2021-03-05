@@ -7,7 +7,6 @@ import java.security.MessageDigest;
 
 public class Client {
 
-    // TODO: Add 30 seconds timeout
     // Call remote methods
     private static void vote(Election e, String hashMd5, String candidato) throws RemoteException {
         System.out.println("Sending vote...");
